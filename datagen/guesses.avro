@@ -1,0 +1,48 @@
+{
+  "namespace": "streams",
+  "name": "guess",
+  "type": "record",
+  "fields": [
+    {
+      "name": "user",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "options": [
+            "marcos",
+            "roberto",
+            "maria",
+            "ana",
+            "pedro",
+            "jose",
+            "daniel",
+            "danilo",
+            "ronaldo",
+            "romario"
+          ]
+        }
+      }
+    },
+    {
+      "name": "song",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "options": [
+            "Breathless",
+            "Summer of '69",
+            "What's up?",
+            "Rock and Roll all nite",
+            "T.N.T.",
+            "All the small things",
+            "Best of you",
+            "Piece of my heart",
+            "Born to run",
+            "Sweet Home Alabama",
+            "Walk of life"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+
+twitter-pooling.log*
+spring-shell.log
+
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/build/
+
+zk-single-kafka-single/*
+
+**/target/
+
+alexa/package-lock.json

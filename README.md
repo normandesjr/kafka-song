@@ -1,6 +1,6 @@
 # Kafka Song
 
-The main goal of this project is to show how KSQL (https://www.confluent.io/product/ksql/) works. KSQL is the streaming SQL engine that enables real-time data processing against Apache Kafka.
+The main goal of this project is to show how KSQL (https://www.confluent.io/product/ksql/) works. KSQL is the streaming SQL engine that enables real-time data processing along with Apache Kafka.
 
 Bellow you will find some guidance to setup the project to work locally.
 
@@ -18,21 +18,21 @@ $ confluent start ksql-server
 
 ## Twitter
 
-To be able get tweets from Twitter you need to set two environment variables *twitter.consumerKey* and *twitter.consumerSecret*.
+To be able to get tweets from Twitter you need to set two environment variables *twitter.consumerKey* and *twitter.consumerSecret*.
 
 You will get these variables in https://developer.twitter.com/ creating a new app. 
 
 ## Spotify
 
-To be able get the song from Spotify you need three variables, *spotify.refreshToken*, *spotify.clientId* and *spotify.clientSecret*.
+To be able to get the song from Spotify you need three variables, *spotify.refreshToken*, *spotify.clientId* and *spotify.clientSecret*.
 
-You will get *spotify.clientId* and *spotify.clientSecret* in https://developer.spotify.com/ at Dashboard page.
+You will get the *spotify.clientId* and *spotify.clientSecret* in https://developer.spotify.com/ at the Dashboard page.
 
 Tip: the Spotify form will ask you for a "redirect URI", you can add something like: http://localhost/callback. Do not matter if you have this application up and running, for this purpose will be ok. 
 
 ### Spotify - OAuth
 
-To generate *spotify.refreshToken* Spotify use OAuth Authorization Code Flow (https://developer.spotify.com/documentation/general/guides/authorization-guide/). 
+To generate the *spotify.refreshToken* Spotify use OAuth Authorization Code Flow (https://developer.spotify.com/documentation/general/guides/authorization-guide/). 
 
 As this is a demo application, you can use Postman (https://www.getpostman.com/) to get the refresh token.
 
@@ -42,13 +42,13 @@ Open Google Chrome and type the URL bellow adding your client_id and the redirec
 
 [https://accounts.spotify.com/authorize?client_id=<your_client_id>&response_type=code&redirect_uri=<your_redirect_uri>&scope=user-read-currently-playing]
 
-Now the Chrome will show an URL like: [http://localhost/callback?code=<the_code_is_shown_here>]
+Now Chrome will show an URL like: [http://localhost/callback?code=<the_code_is_shown_here>]
 
 Copy the *code* and save it, you'll need it to generate the *refreshToken*.
 
-2. Getting *refresh token*
+2. Getting the *refresh token*
 
-Now using Postman create a POST request to https://accounts.spotify.com/api/token
+Now using Postman to create a POST request for https://accounts.spotify.com/api/token
 
 Set the Content-Type header to application/x-www-form-urlencoded
 
@@ -60,7 +60,7 @@ At body you'll add three parameters:
 * *code* with the value you got earlier with Chrome
 * *redirect_uri* with the value you added to create the app
 
-Make the request. The JSON answered has the *refresh_token* parameter. 
+Make the request. The response JSON will have the *refresh_token* parameter. 
     
 ## Generate guesses (tweet simulator)
 

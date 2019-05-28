@@ -54,11 +54,8 @@ public class KafkaConfig {
         config.put(ConsumerConfig.GROUP_ID_CONFIG, "winner");
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
-
         return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(),
-                new JsonDeserializer<>(Winner.class,objectMapper));
+                new JsonDeserializer<>(Winner.class));
     }
 
     @Bean

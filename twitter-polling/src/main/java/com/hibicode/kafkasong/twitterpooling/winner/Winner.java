@@ -1,5 +1,7 @@
 package com.hibicode.kafkasong.twitterpooling.winner;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Winner {
 
     private String user;
@@ -8,6 +10,7 @@ public class Winner {
         return user;
     }
 
+    @JsonProperty("USER")
     public void setUser(String user) {
         this.user = user;
     }

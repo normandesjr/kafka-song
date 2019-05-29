@@ -2,6 +2,24 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk-core');
+const firebaseAdmin = require('firebase-admin');
+const AWS = require('aws-sdk');
+const S3 = new AWS.S3({region: process.env.AWS_REGION, apiVersion: '2006-03-01'});
+const params = 
+{
+  Bucket: 'kafka-song', 
+  Key: 'kafka-song-firebase-admin.json' 
+}
+
+var db;
+S3.getObject(params).promise().then(r => {
+  var serviceAccount = JSON.parse(r.Body);
+  firebaseAdmin.initializeApp({
+    credential: firebaseAdmin.credential.cert(serviceAccount)
+  });
+  
+  db = firebaseAdmin.firestore();
+});
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -23,13 +41,29 @@ const WinnerIntentHandler = {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
       && handlerInput.requestEnvelope.request.intent.name === 'WinnerIntent';
   },
-  handle(handlerInput) {
-    const speechText = 'The winner is Maria!';
 
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .withSimpleCard('Hello World', speechText)
-      .getResponse();
+  handle(handlerInput) {
+    
+    var speechTextPromise = db.collection('winners').get()
+      .then((snapshot) => {
+        var speechText;
+
+        snapshot.forEach((doc) => {
+          var winner = doc.data();
+          speechText = 'The winner is ' + winner.name;
+        });
+        return speechText;
+      })
+      .catch((err) => {
+        console.log('Error getting documents', err);
+      });
+
+      return speechTextPromise.then(speechText => 
+        handlerInput.responseBuilder
+          .speak(speechText)
+          .withSimpleCard('Winner', speechText)
+          .getResponse()
+      );
   },
 };
 
@@ -94,7 +128,7 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 
 exports.kafkaSong = skillBuilder
   .addRequestHandlers(
-    LaunchRequestHandler,
+    // LaunchRequestHandler,
     WinnerIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,

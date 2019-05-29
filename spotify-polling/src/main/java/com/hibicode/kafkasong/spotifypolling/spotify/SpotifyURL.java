@@ -1,4 +1,4 @@
-package com.hibicode.kafkasong.twitterpooling.spotify;
+package com.hibicode.kafkasong.spotifypolling.spotify;
 
 public class SpotifyURL {
 

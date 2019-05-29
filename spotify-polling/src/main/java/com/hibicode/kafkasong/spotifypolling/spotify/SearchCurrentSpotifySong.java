@@ -1,4 +1,4 @@
-package com.hibicode.kafkasong.twitterpooling.spotify;
+package com.hibicode.kafkasong.spotifypolling.spotify;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

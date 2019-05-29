@@ -1,4 +1,4 @@
-package com.hibicode.kafkasong.twitterpooling.config;
+package com.hibicode.kafkasong.winnerlistener.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;

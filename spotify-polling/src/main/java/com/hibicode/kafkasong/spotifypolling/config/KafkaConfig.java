@@ -1,4 +1,4 @@
-package com.hibicode.kafkasong.twitterpooling.config;
+package com.hibicode.kafkasong.spotifypolling.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -21,8 +21,8 @@ public class KafkaConfig {
     private String bootstrapServers;
 
     @Bean
-    public NewTopic guessesTopic() {
-        return new NewTopic("guesses", 1, (short) 1);
+    public NewTopic currentSongTopic() {
+        return new NewTopic("current_song", 1, (short) 1);
     }
 
     @Bean
@@ -30,7 +30,7 @@ public class KafkaConfig {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        config.put(ConsumerConfig.GROUP_ID_CONFIG, "guesses");
+        config.put(ConsumerConfig.GROUP_ID_CONFIG, "current_song");
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 
         return new DefaultKafkaConsumerFactory<>(config);

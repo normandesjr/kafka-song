@@ -1,4 +1,4 @@
-package com.hibicode.kafkasong.twitterpooling.winner;
+package com.hibicode.kafkasong.winnerlistener.winner;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

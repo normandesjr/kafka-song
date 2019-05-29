@@ -28,5 +28,4 @@ public class ApplicationCommand {
         searchTweet.stop();
     }
 
-
 }

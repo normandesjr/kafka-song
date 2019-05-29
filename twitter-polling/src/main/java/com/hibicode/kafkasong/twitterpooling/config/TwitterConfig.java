@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Configuration
 @RequestMapping
-public class TwitterConfig  {
+public class TwitterConfig {
 
     @Bean
     @GetMapping
@@ -21,7 +21,6 @@ public class TwitterConfig  {
                 env.getProperty("twitter.consumerKey"),
                 env.getProperty("twitter.consumerSecret"));
     }
-
 
 
 }

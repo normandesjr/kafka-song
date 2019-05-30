@@ -1,0 +1,22 @@
+{
+  "name": "es-sink-mysql-foobar-01",
+  "config": {
+    "_comment": "-- standard converter stuff -- this can actually go in the worker config globally --",
+    "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
+
+    "_comment": "--- Elasticsearch-specific config ---",
+    "_comment": "Elasticsearch server address",
+    "connection.url": "http://localhost:9200",
+
+    "_comment": "Elasticsearch mapping name. Gets created automatically if doesn't exist  ",
+    "type.name": "type.name=kafka-connect",
+
+    "_comment": "Which topic to stream data from into Elasticsearch",
+    "topics": "GUESSES_STAGE_3",
+
+    "_comment": "If the Kafka message doesn't have a key (as is the case with JDBC source)  you need to specify key.ignore=true. If you don't, you'll get an error from the Connect task: 'ConnectException: Key is used as document id and can not be null.",
+    "key.ignore": "true",
+
+    "schema.ignore": "true"
+  }
+}

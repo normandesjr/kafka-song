@@ -39,3 +39,5 @@ zk-single-kafka-single/*
 **/target/
 
 alexa/package-lock.json
+
+.env

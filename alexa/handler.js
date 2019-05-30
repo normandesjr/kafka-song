@@ -11,14 +11,13 @@ const params =
   Key: 'kafka-song-firebase-admin.json' 
 }
 
-var db;
-S3.getObject(params).promise().then(r => {
+var promiseDb = S3.getObject(params).promise().then(r => {
   var serviceAccount = JSON.parse(r.Body);
   firebaseAdmin.initializeApp({
     credential: firebaseAdmin.credential.cert(serviceAccount)
   });
   
-  db = firebaseAdmin.firestore();
+  return firebaseAdmin.firestore();
 });
 
 const LaunchRequestHandler = {
@@ -43,27 +42,24 @@ const WinnerIntentHandler = {
   },
 
   handle(handlerInput) {
-    
-    var speechTextPromise = db.collection('winners').get()
-      .then((snapshot) => {
+    return promiseDb
+      .then(db => db.collection('winners').get())
+      .then((winners) => {
         var speechText;
-
-        snapshot.forEach((doc) => {
-          var winner = doc.data();
+        winners.forEach((winnerDocument) => {
+          var winner = winnerDocument.data();
           speechText = 'The winner is ' + winner.name;
         });
         return speechText;
       })
+      .then(speechText => 
+        handlerInput.responseBuilder
+          .speak(speechText)
+          // .withSimpleCard('Winner', speechText)
+          .getResponse())
       .catch((err) => {
         console.log('Error getting documents', err);
       });
-
-      return speechTextPromise.then(speechText => 
-        handlerInput.responseBuilder
-          .speak(speechText)
-          .withSimpleCard('Winner', speechText)
-          .getResponse()
-      );
   },
 };
 

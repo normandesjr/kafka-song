@@ -20,21 +20,6 @@ var promiseDb = S3.getObject(params).promise().then(r => {
   return firebaseAdmin.firestore();
 });
 
-const LaunchRequestHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
-  },
-  handle(handlerInput) {
-    const speechText = 'Welcome to Zup!';
-
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(speechText)
-      .withSimpleCard('Hello World', speechText)
-      .getResponse();
-  },
-};
-
 const WinnerIntentHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
@@ -54,13 +39,15 @@ const WinnerIntentHandler = {
       })
       .then(speechText => 
         handlerInput.responseBuilder
-          .speak(speechText)
-          // .withSimpleCard('Winner', speechText)
+          .speak(speechText != undefined ? speechText : 'There is no winner yet')
           .getResponse())
       .catch((err) => {
         console.log('Error getting documents', err);
+        return handlerInput.responseBuilder
+          .speak('Sorry, some error happened finding the winner')
+          .getResponse();
       });
-  },
+  }
 };
 
 const HelpIntentHandler = {
@@ -69,41 +56,13 @@ const HelpIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
   },
   handle(handlerInput) {
-    const speechText = 'You can say hello to me!';
+    const speechText = 'You can ask me who is the winner!';
 
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .withSimpleCard('Hello World', speechText)
       .getResponse();
-  },
-};
-
-const CancelAndStopIntentHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent'
-        || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
-  },
-  handle(handlerInput) {
-    const speechText = 'Goodbye!';
-
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .withSimpleCard('Hello World', speechText)
-      .getResponse();
-  },
-};
-
-const SessionEndedRequestHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
-  },
-  handle(handlerInput) {
-    console.log(`Session ended with reason: ${handlerInput.requestEnvelope.request.reason}`);
-
-    return handlerInput.responseBuilder.getResponse();
-  },
+  }
 };
 
 const ErrorHandler = {
@@ -114,21 +73,17 @@ const ErrorHandler = {
     console.log(`Error handled: ${error.message}`);
 
     return handlerInput.responseBuilder
-      .speak('Sorry, I can\'t understand the command. Please say again.')
-      .reprompt('Sorry, I can\'t understand the command. Please say again.')
+      .speak('Sorry, I can\'t understand. Please say again.')
       .getResponse();
-  },
+  }
 };
 
 const skillBuilder = Alexa.SkillBuilders.custom();
 
 exports.kafkaSong = skillBuilder
   .addRequestHandlers(
-    // LaunchRequestHandler,
     WinnerIntentHandler,
-    HelpIntentHandler,
-    CancelAndStopIntentHandler,
-    SessionEndedRequestHandler
+    HelpIntentHandler
   )
   .addErrorHandlers(ErrorHandler)
   .lambda();

@@ -1,6 +1,6 @@
 package com.hibicode.kafkasong.twitterpooling.winner;
 
-import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.Firestore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,24 +23,24 @@ public class WinnerListener {
     @KafkaListener(topics = "WINNERS")
     public void winner(@Payload Winner winnerUser) {
         LOG.info("#### WINNER: " + winnerUser);
-        final String winner = winnerUser.getUser();
-        saveToFirestore(winner);
+        saveToFirestore(winnerUser);
     }
 
-    private void saveToFirestore(String winner) {
-        final DocumentReference winnersDocument = firestore.collection("winners").document(winner);
+    private void saveToFirestore(Winner winner) {
+        final CollectionReference winnersCollectionReference = firestore.collection("winners");
 
         try {
-            writeDocument(winner, winnersDocument);
+            writeDocument(winner, winnersCollectionReference);
         } catch (Exception e) {
             LOG.error("Error writing to Firestore: ", e);
         }
     }
 
-    private void writeDocument(String winner, DocumentReference winnersDocument) {
+    private void writeDocument(Winner winner, CollectionReference winnersCollectionReference) {
         final Map<String, Object> data = new HashMap<>();
-        data.put("name", winner);
-        winnersDocument.set(data);
+        data.put("name", winner.getUser());
+        data.put("time", winner.getTimestamp());
+        winnersCollectionReference.add(data);
     }
 
 }

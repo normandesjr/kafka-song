@@ -30,6 +30,7 @@ const WinnerIntentHandler = {
     return promiseDb
       .then(db => db.collection('winners').orderBy('time', 'asc').limit(1).get())
       .then((winners) => {
+        var speechText = 'There is no winner yet';
         winners.forEach((winnerDocument) => {
           var winner = winnerDocument.data();
           speechText = 'The winner is ' + winner.name;

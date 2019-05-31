@@ -1,26 +1,32 @@
 <template>
   <div id="app">
-    <HelloWorld/>
+    <Header/>
     <Winners/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/Header.vue'
-import Winners from './components/Winners'
+import Header from "./components/Header.vue";
+import Winners from "./components/Winners";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    HelloWorld,
+    Header,
     Winners
-  },
-}
+  }
+};
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500,600");
+body {
+  margin: 0px;
+  padding: 0px;
+}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

@@ -40,6 +40,6 @@ public class SearchTweet {
     private void doSearch(Hashtag hashtag) {
         final SearchResults searchResults = twitter.searchOperations().search(hashtag.get());
         searchResults.getTweets().forEach(t -> guessStore.add(
-                new Guess(t.getFromUser(), t.getText(), hashtag.get())));
+                new Guess(t.getUser().getName(), t.getText(), hashtag.get())));
     }
 }

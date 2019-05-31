@@ -4,7 +4,7 @@ const config = {
   apiKey: "",
   authDomain: "",
   databaseURL: "",
-  projectId: "kafka-song-4b5bd",
+  projectId: "kafka-song",
   storageBucket: "",
   messagingSenderId: "",
   appId: ""

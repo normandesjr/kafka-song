@@ -28,18 +28,25 @@ const WinnerIntentHandler = {
 
   handle(handlerInput) {
     return promiseDb
-      .then(db => db.collection('winners').get())
+      .then(db => db.collection('winners').orderBy('time', 'asc').limit(1).get())
       .then((winners) => {
-        var speechText;
+        // console.log('winnnnners', winners);
+        // var speechText = 'There is no winner yet';
+        // if (winners) {
+        //   winners.sort((a, b) => a.time > b.time ? 1 : -1);
+        //   speechText = winners[0].name;
+        // }
+
         winners.forEach((winnerDocument) => {
           var winner = winnerDocument.data();
+          console.log('name', winner.name);
           speechText = 'The winner is ' + winner.name;
         });
         return speechText;
       })
       .then(speechText => 
         handlerInput.responseBuilder
-          .speak(speechText != undefined ? speechText : 'There is no winner yet')
+          .speak(speechText)
           .getResponse())
       .catch((err) => {
         console.log('Error getting documents', err);

@@ -34,7 +34,7 @@ export default {
       querySnapshot.forEach(doc => {
         this.winners.push({
           name: doc.data().name,
-          time: moment(parseInt(doc.data().time)).format("HH:MM:SS DD/MM/YYYY")
+          time: moment(parseInt(doc.data().time)).format("HH:mm:ss DD/MM/YYYY")
         });
       });
       this.winners.sort((a, b) => (a.time > b.time ? 1 : -1));
